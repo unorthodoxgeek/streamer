@@ -4,3 +4,14 @@ docker/twitter_conf
 docker/connectors/pulsar-io-cassandra-2.5.0.nar
 docker/connectors/pulsar-io-mongo-2.5.0.nar
 docker/connectors/pulsar-io-jdbc-2.5.0.nar
+__pycache__/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+.DS_Store
+.ipynb_checkpoints/
+checkpoints/

@@ -1,4 +1,6 @@
+#!/usr/bin/env python
 import os, sys
+from distutils.core import setup
 
 DOCKER_FOLDER_PATH = "./docker"
 PULSAR_CONTAINER = "docker_pulsar_1"
@@ -43,3 +45,16 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+
+setup(
+    name='Streamer',
+    version='1.0',
+    description='Using pulsar and tensorflow as the backend of a twitter sentiment app',
+    install_requires=[
+        'tensorflow',
+        'keras',
+        'keras_preprocessing',
+    ],
+)
