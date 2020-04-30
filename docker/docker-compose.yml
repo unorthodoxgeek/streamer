@@ -1,0 +1,28 @@
+version: "3.7"
+services:
+  pulsar:
+    image: apachepulsar/pulsar:2.5.0
+    command: bin/pulsar standalone
+    hostname: pulsar
+    ports:
+      - "8080:8080"
+      - "6650:6650"
+    restart: unless-stopped
+    volumes:
+      - "./data/:/pulsar/data"
+      - "./connectors/:/pulsar/connectors"
+      - "../streamer/functions/:/pulsar/functions"
+      - "../streamer/schemas/:/pulsar/schemas"
+    depends_on:
+      - db
+
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports: 
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+    security_opt:
+      - seccomp:unconfined

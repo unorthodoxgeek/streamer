@@ -1,0 +1,5 @@
+configs:
+  userName: "root"
+  password: "example"
+  jdbcUrl: "jdbc:mysql://db:3306/pulsar_mysql_jdbc_sink"
+  tableName: "pulsar_mysql_jdbc_sink"

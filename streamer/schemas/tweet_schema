@@ -1,0 +1,5 @@
+{
+  "type": "AVRO",
+  "schema": "{\"type\": \"record\",\"name\": \"Tweet\",\"fields\": [{\"name\": \"user_id\", \"type\":[\"null\", \"int\"]},        {\"name\": \"text\", \"type\":[\"null\", \"string\"]},{\"name\": \"lang\", \"type\":[\"null\", \"string\"]}]}",
+  "properties": {}
+}
