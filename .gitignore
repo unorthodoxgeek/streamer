@@ -2,7 +2,6 @@ docker/data/bookkeeper
 docker/data/standalone
 docker/twitter_conf
 docker/connectors/pulsar-io-cassandra-2.5.0.nar
-docker/connectors/pulsar-io-mongo-2.5.0.nar
 docker/connectors/pulsar-io-jdbc-2.5.0.nar
 __pycache__/
 wheels/
