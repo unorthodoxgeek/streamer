@@ -1,0 +1,6 @@
+ configs:
+   mongoUri: "mongodb://root:example@db:27017/?authSource=admin"
+   database: "tweets"
+   collection: "tweets"
+   batchSize: 1
+   batchTimeMs: 1000

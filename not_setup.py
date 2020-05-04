@@ -14,13 +14,7 @@ def docker_exec(
     print(command)
     os.system(command)
 
-def verify_jdbc_connector_exists():
-    if not os.path.isfile('./docker/connectors/pulsar-io-jdbc-2.5.0.nar'):
-        sys.exit("'./docker/connectors/pulsar-io-jdbc-2.5.0.nar' is missing. Download it from https://archive.apache.org/dist/pulsar/pulsar-2.5.0/connectors/pulsar-io-jdbc-2.5.0.nar then run this script again")
-
 def main():
-    verify_jdbc_connector_exists()
-
     source_config = os.popen('source ./docker/twitter_conf && echo "\'{"consumerKey":${CONSUMER_KEY},"consumerSecret":${CONSUMER_SECRET},"token":${TOKEN},"tokenSecret":${TOKEN_SECRET}}\'"').read()
 
     docker_exec(
@@ -39,8 +33,8 @@ def main():
     )
 
     docker_exec(
-        "Creating MySQL sink",
-        f"docker exec -it {PULSAR_CONTAINER} {PULSAR_ADMIN} sinks create  --archive ./connectors/pulsar-io-jdbc-2.5.0.nar --inputs tweet_records --name pulsar-mysql-jdbc-sink --sink-config-file ./connectors/pulsar-mysql-jdbc-sink.yaml",
+        "Creating MongoDB sink",
+        f"docker exec -it {PULSAR_CONTAINER} {PULSAR_ADMIN} sinks create --sink-type mongo --inputs tweet_records --name pulsar-mongodb-sink --sink-config-file ./connectors/pulsar-mongodb-sink.yaml",
     )
 
 if __name__ == "__main__":
