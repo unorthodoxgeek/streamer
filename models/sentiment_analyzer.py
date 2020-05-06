@@ -1,5 +1,5 @@
 import json
-import tensorflow as tf
+import requests
 from keras_preprocessing.text import tokenizer_from_json
 from keras.preprocessing.sequence import pad_sequences
 
@@ -16,7 +16,6 @@ MAX_SEQ_LEN = 25
 with open('models/sentiment_analyzer/tokenizer.json') as f:
     data = json.load(f)
     tokenizer = tokenizer_from_json(data)
-model = tf.keras.models.load_model('models/sentiment_analyzer/model.ckpt')
 
 def clean_text(text, mapping):
     replace_white_space = ["\n"]
@@ -44,8 +43,10 @@ def predict_sentiment(text):
     text_vector = [clean_text(text, CONTRACTION_MAPPING)]
     text_vector = tokenizer.texts_to_sequences(text_vector)
     text_vector = pad_sequences(text_vector, maxlen=MAX_SEQ_LEN)
-    prediction = model.predict(text_vector)
-    arr_prediction = prediction.tolist()[0]
+
+    url = "http://127.0.0.1:8501/v1/models/twitter_sentiment/versions/1:predict"
+    prediction = requests.post(url, json={"instances": text_vector.tolist()})
+    arr_prediction = prediction.json()["predictions"][0]
     max_prediction = max(arr_prediction)
     index = arr_prediction.index(max_prediction)
     if max_prediction > 0.75:

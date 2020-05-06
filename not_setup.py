@@ -19,12 +19,22 @@ def main():
 
     docker_exec(
         "Creating Pulsar twitter source",
-        f"docker exec -it {PULSAR_CONTAINER} {PULSAR_ADMIN} source create --name twitter --source-type twitter --destinationTopicName tweets2 --source-config {source_config}",
+        f"docker exec -it {PULSAR_CONTAINER} {PULSAR_ADMIN} source create --name twitter --source-type twitter --destinationTopicName tweets --source-config {source_config}",
     )
 
     docker_exec(
-        "Creating tweet record function",
-        f"docker exec -it {PULSAR_CONTAINER} {PULSAR_ADMIN} functions create --py functions/step2.py --classname step2.TweetToRecord --inputs tweets2 --output persistent://public/default/tweet_records --tenant public --namespace default --name step2",
+        "Create english filter function",
+        f"docker exec -it {PULSAR_CONTAINER} {PULSAR_ADMIN} functions create --py functions/filter_english.py --classname filter_english.FilterEnglish --inputs tweets --output persistent://public/default/english_tweets --tenant public --namespace default --name filter_english",
+    )
+
+    docker_exec(
+        "Create sentiment hydration function",
+        f"docker exec -it {PULSAR_CONTAINER} {PULSAR_ADMIN} functions create --py functions/add_sentiment.py --classname add_sentiment.AddSentiment --inputs english_tweets --output persistent://public/default/tweets_with_sentiment --tenant public --namespace default --name add_sentiment",
+    )
+
+    docker_exec(
+        "Create db writer function",
+        f"docker exec -it {PULSAR_CONTAINER} {PULSAR_ADMIN} functions create --py functions/write_to_db.py --classname write_to_db.TweetToRecord --inputs tweets_with_sentiment --tenant public --namespace default --name write_to_db",
     )
 
     docker_exec(

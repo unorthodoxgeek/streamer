@@ -8,19 +8,54 @@ services:
       - "8080:8080"
       - "6650:6650"
     restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 3gb
     volumes:
       - "./data/:/pulsar/data"
       - "./connectors/:/pulsar/connectors"
       - "../streamer/functions/:/pulsar/functions"
+      - "../models/:/pulsar/models"
       - "../streamer/schemas/:/pulsar/schemas"
     depends_on:
       - db
+      - model_serving
 
   db:
     image: mongo
     restart: always
+    deploy:
+      resources:
+        limits:
+          memory: 1gb
     ports: 
       - "27017-27019:27017-27019"
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
+
+  tensorflow_serving:
+    image: tensorflow/serving
+    command: tensorflow/serving
+    hostname: tensorflow
+    ports:
+      - "8500:8500"
+      - "8501:8501"
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 2gb
+    volumes:
+      - "../compiled_models/twitter_sentiment:/models/twitter_sentiment"
+    environment:
+      MODEL_NAME: twitter_sentiment
+
+  model_serving:
+    image: flask_model_helper:latest
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    depends_on:
+      - tensorflow_serving

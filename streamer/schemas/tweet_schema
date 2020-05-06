@@ -1,5 +1,5 @@
 {
   "type": "AVRO",
-  "schema": "{\"type\": \"record\",\"name\": \"Tweet\",\"fields\": [{\"name\": \"user_id\", \"type\":[\"null\", \"int\"]},        {\"name\": \"text\", \"type\":[\"null\", \"string\"]},{\"name\": \"lang\", \"type\":[\"null\", \"string\"]}]}",
+  "schema": "{\"type\": \"record\",\"name\": \"Tweet\",\"fields\": [{\"name\": \"user_id\", \"type\":[\"null\", \"int\"]},        {\"name\": \"text\", \"type\":[\"null\", \"string\"]},{\"name\": \"lang\", \"type\":[\"null\", \"string\"]}, {\"name\": \"sentiment\", \"type\":[\"null\", \"string\"]}, {\"name\": \"confidence\", \"type\":[\"null\", \"float\"]}]}",
   "properties": {}
 }
