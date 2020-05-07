@@ -11,5 +11,6 @@ setup(
         'flask',
         'requests',
         'tensorflow',
+        'influxdb',
     ],
 )

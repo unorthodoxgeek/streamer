@@ -1,5 +1,6 @@
 from flask import Flask, request
 from models.sentiment_analyzer import predict_sentiment
+from models.time_series import get_time_series
 
 app = Flask(__name__)
 
@@ -9,6 +10,9 @@ def sentiment_prediction():
     sentiment, confidence = predict_sentiment(text)
     return dict(sentiment=sentiment, confidence=confidence)
 
+@app.route('/get_sentiment')
+def get_sentiment():
+	return get_time_series()
 
 
 if __name__ == '__main__':
