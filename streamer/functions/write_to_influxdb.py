@@ -10,14 +10,15 @@ class TweetToInfluxdb(Function):
         self.error_topic = "python_exceptions"
 
     def process(self, item, context):
-        try:
-            print("!!!")
-            #  tweet = json.loads(item)
-            #  requests.post(
-                #  self.url,
-                #  data=f"tweets value={tweet['sentiment']}",
-            #  )
-        except:
-            context.publish(self.error_topic, json.dumps(
-                dict(function="write_to_influxdb", exception=f"{sys.exc_info()[0]}")
-            ))
+        tweet = json.loads(item)
+        sentiment = tweet['sentiment']
+        if sentiment == "Positive":
+            sent = 1
+        elif sentiment == "Neutral":
+            sent = 0.5
+        else:
+            sent = 0
+        requests.post(
+            self.url,
+            data="tweets value={}".format(sent),
+        )
