@@ -38,6 +38,11 @@ def main():
     )
 
     docker_exec(
+        "Create influxdb writer function",
+        f"docker exec -it {PULSAR_CONTAINER} {PULSAR_ADMIN} functions create --py functions/write_to_influxdb.py --classname write_to_influxdb.TweetToInfluxdb --inputs tweets_with_sentiment --tenant public --namespace default --name write_to_influxdb",
+    )
+
+    docker_exec(
         "Create tweet_records schema",
         f"docker exec -it {PULSAR_CONTAINER} {PULSAR_ADMIN} schemas upload -f ./schemas/tweet_schema tweet_records",
     )

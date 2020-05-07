@@ -20,6 +20,7 @@ services:
       - "../streamer/schemas/:/pulsar/schemas"
     depends_on:
       - db
+      - influx_db
       - model_serving
 
   db:
@@ -65,3 +66,7 @@ services:
     restart: always
     ports:
       - "8086:8086"
+    environment:
+      INFLUXDB_DB: tweets
+    volumes:
+      - "./influxdb:/var/lib/influxdb"
