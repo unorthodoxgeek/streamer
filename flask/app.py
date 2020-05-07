@@ -12,7 +12,8 @@ def sentiment_prediction():
 
 @app.route('/get_sentiment')
 def get_sentiment():
-	return get_time_series()
+	result = get_time_series()
+	return dict(time_series=result.raw['series'][0]['values'])
 
 
 if __name__ == '__main__':
