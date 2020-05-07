@@ -35,13 +35,6 @@ services:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
 
-  influx_db:
-    image: influxdb:latest
-    restart: always
-    ports:
-      - "8089:8089"
-      - "8091:8091"
-
   tensorflow_serving:
     image: tensorflow/serving
     command: tensorflow/serving
@@ -66,3 +59,9 @@ services:
       - "5000:5000"
     depends_on:
       - tensorflow_serving
+
+  influx_db:
+    image: influxdb:latest
+    restart: always
+    ports:
+      - "8086:8086"
