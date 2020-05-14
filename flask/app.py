@@ -15,6 +15,10 @@ def get_sentiment():
 	result = get_time_series()
 	return dict(time_series=result.raw['series'][0]['values'])
 
+@app.route('/')
+def root():
+    return app.send_static_file('index.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

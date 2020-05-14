@@ -1,7 +1,7 @@
 import json
 import requests
-from keras_preprocessing.text import tokenizer_from_json
-from keras.preprocessing.sequence import pad_sequences
+import pickle
+from keras_preprocessing.sequence import pad_sequences
 
 CONTRACTION_MAPPING = {
     "don't": "do not",
@@ -12,10 +12,8 @@ CONTRACTION_MAPPING = {
 MAX_SEQ_LEN = 25
 
 
-#load tokenizer
-with open('models/sentiment_analyzer/tokenizer.json') as f:
-    data = json.load(f)
-    tokenizer = tokenizer_from_json(data)
+with open('models/sentiment_analyzer/tokenizer.pickle', 'rb') as handle:
+    tokenizer = pickle.load(handle)
 
 def clean_text(text, mapping):
     replace_white_space = ["\n"]
