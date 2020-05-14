@@ -2,7 +2,7 @@ from flask import Flask, request
 from models.sentiment_analyzer import predict_sentiment
 from models.time_series import get_time_series
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='', static_folder='static')
 
 @app.route('/predict_sentiment', methods=['POST'])
 def sentiment_prediction():
