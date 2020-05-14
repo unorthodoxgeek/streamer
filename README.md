@@ -1,6 +1,5 @@
 Steps:
-1. cd flask
-2. run `docker build -t flask_model_helper .`
-3. run `docker-compose up`
-4. run `python not_setup.py`
-5. profit?
+1. Run `docker build -t flask_model_helper flask/.`
+2. Run `docker-compose -f docker/docker-compose.yml up`
+3. Run `python not_setup.py`
+4. Profit?
