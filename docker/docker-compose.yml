@@ -60,6 +60,8 @@ services:
       - "5000:5000"
     depends_on:
       - tensorflow_serving
+    volumes:
+      - "../flask:/app"
 
   influx_db:
     image: influxdb:latest
